@@ -58,6 +58,20 @@ input_df = pd.DataFrame(features, columns=feature_columns)
 
 # Prediction
 features_scaled = scaler.transform(input_df)
+
+# Mapping from label to description
+category_map = {
+    0: "Insufficient Weight",
+    1: "Normal Weight",
+    2: "Overweight Level I",
+    3: "Overweight Level II",
+    4: "Obesity Type I",
+    5: "Obesity Type II",
+    6: "Obesity Type III"
+}
+
 if st.button("Predict"):
     prediction = model.predict(features_scaled)[0]
-    st.success(f"Predicted Obesity Category: **{prediction}**")
+    readable_label = category_map.get(prediction, "Unknown")
+    st.success(f"🏷️ Predicted Obesity Category: **{readable_label}** (class {prediction})")
+
